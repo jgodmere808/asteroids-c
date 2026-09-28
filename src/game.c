@@ -4,12 +4,6 @@
 #define GAME_WIDTH  1000
 #define GAME_HEIGHT 800
 
-typedef struct _asteroid {
-    Position pos;
-    Velocity vel;
-    Vector2 lines[11];
-} Asteroid;
-
 typedef struct _game {
     Ship ship;
     int width;
