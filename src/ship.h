@@ -14,6 +14,5 @@ typedef struct _ship {
 
 Ship initShip();
 void moveShip(Ship *ship, Position pos);
-void addShipAngle(Ship *ship, float angle);
 void updateShip(Ship *ship);
 void drawShip(Ship *ship);

@@ -29,21 +29,43 @@ void moveShip(Ship *ship, Position pos)
     ship->pos = pos;
 }
 
-void addShipAngle(Ship *ship, float angle)
+static void addShipAngle(Ship *ship, float angle)
 {
     ship->angle += angle;
 }
 
+static void addShipVelocity(Ship *ship, Velocity vel)
+{
+    ship->vel.dx += vel.dx;
+    ship->vel.dy += vel.dy;
+}
+
 void updateShip(Ship *ship)
 {
+    float nextX, nextY;
+
+    // rotate ship
     if (IsKeyDown(KEY_LEFT))  addShipAngle(ship, -0.1f);
     if (IsKeyDown(KEY_RIGHT)) addShipAngle(ship,  0.1f);
 
+    // thrust boolean
     if (IsKeyDown(KEY_UP)) {
         thrusting = 1;
     } else {
         thrusting = 0;
     }
+
+    // thrust velocity
+    if (IsKeyDown(KEY_UP)) {
+        Vector2 forward = Vector2Rotate((Vector2){ 0.0f, -1.0f }, ship->angle);
+        Velocity change = { forward.x * 0.1f, forward.y * 0.1f };
+        addShipVelocity(ship, change);
+    }
+
+    nextX = ship->pos.x + ship->vel.dx;
+    nextY = ship->pos.y + ship->vel.dy;
+
+    moveShip(ship, (Position){ nextX, nextY });
 }
 
 void drawShip(Ship *ship)
