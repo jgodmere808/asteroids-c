@@ -36,6 +36,9 @@ void addShipAngle(Ship *ship, float angle)
 
 void updateShip(Ship *ship)
 {
+    if (IsKeyDown(KEY_LEFT))  addShipAngle(ship, -0.1f);
+    if (IsKeyDown(KEY_RIGHT)) addShipAngle(ship,  0.1f);
+
     if (IsKeyDown(KEY_UP)) {
         thrusting = 1;
     } else {
