@@ -29,7 +29,8 @@ void initGame()
 
 void updateGame()
 {
-    return;
+    if (IsKeyDown(KEY_LEFT))  addShipAngle(&game.ship, -0.1f);
+    if (IsKeyDown(KEY_RIGHT)) addShipAngle(&game.ship,  0.1f);
 }
 
 void drawGame()

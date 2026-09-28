@@ -21,6 +21,21 @@ void moveShip(Ship *ship, Position pos)
     ship->pos = pos;
 }
 
+void addShipAngle(Ship *ship, float angle)
+{
+    int i;
+
+    ship->angle += angle;
+
+    for (i = 0; i < 5; i++) {
+        Vector2 rotated = Vector2Rotate(ship->lines[i], angle);
+        ship->lines[i] = (Vector2) {
+            rotated.x + ship->pos.x,
+            rotated.y + ship->pos.y
+        };
+    }
+}
+
 void drawShip(Ship *ship)
 {
     DrawLineStrip(
