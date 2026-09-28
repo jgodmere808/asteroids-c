@@ -60,6 +60,10 @@ void updateShip(Ship *ship)
         Vector2 forward = Vector2Rotate((Vector2){ 0.0f, -1.0f }, ship->angle);
         Velocity change = { forward.x * 0.1f, forward.y * 0.1f };
         addShipVelocity(ship, change);
+    } else {
+        // drag, slows down the ship
+        ship->vel.dx *= 0.99f;
+        ship->vel.dy *= 0.99f;
     }
 
     nextX = ship->pos.x + ship->vel.dx;
