@@ -9,9 +9,11 @@ typedef struct _ship {
     Position pos;
     Velocity vel;
     Vector2 lines[5];
+    Vector2 thrustLines[4];
 } Ship;
 
 Ship initShip();
 void moveShip(Ship *ship, Position pos);
 void addShipAngle(Ship *ship, float angle);
+void updateShip(Ship *ship);
 void drawShip(Ship *ship);

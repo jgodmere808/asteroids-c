@@ -1,6 +1,8 @@
 
 #include "ship.h"
 
+static int thrusting = 0;
+
 Ship initShip()
 {
     return (Ship){
@@ -12,6 +14,12 @@ Ship initShip()
             {   0,  15 },  // rear notch
             { -20,  25 },  // left rear
             {   0, -30 }   // back to nose
+        },
+        .thrustLines = {
+            { -8, 20 },  // left base
+            {  0, 45 },  // flame tip
+            {  8, 20 },  // right base
+            { -8, 20 }   // close triangle
         }
     };
 }
@@ -23,30 +31,39 @@ void moveShip(Ship *ship, Position pos)
 
 void addShipAngle(Ship *ship, float angle)
 {
-    int i;
-
     ship->angle += angle;
+}
 
-    for (i = 0; i < 5; i++) {
-        Vector2 rotated = Vector2Rotate(ship->lines[i], angle);
-        ship->lines[i] = (Vector2) {
-            rotated.x + ship->pos.x,
-            rotated.y + ship->pos.y
-        };
+void updateShip(Ship *ship)
+{
+    if (IsKeyDown(KEY_UP)) {
+        thrusting = 1;
+    } else {
+        thrusting = 0;
     }
 }
 
 void drawShip(Ship *ship)
 {
-    DrawLineStrip(
-        (Vector2[]){
-            { ship->lines[0].x + ship->pos.x, ship->lines[0].y + ship->pos.y },
-            { ship->lines[1].x + ship->pos.x, ship->lines[1].y + ship->pos.y },
-            { ship->lines[2].x + ship->pos.x, ship->lines[2].y + ship->pos.y },
-            { ship->lines[3].x + ship->pos.x, ship->lines[3].y + ship->pos.y },
-            { ship->lines[4].x + ship->pos.x, ship->lines[4].y + ship->pos.y }
-        },
-        5,
-        WHITE
-    );
+    Vector2 shipPoints[5];
+
+    for (int i = 0; i < 5; i++) {
+        Vector2 rotated = Vector2Rotate(ship->lines[i], ship->angle);
+        shipPoints[i] = (Vector2){ rotated.x + ship->pos.x, rotated.y + ship->pos.y };
+    }
+
+    // Ship
+    DrawLineStrip(shipPoints, 5, WHITE);
+
+    // Thrust
+    if (thrusting) {
+        Vector2 thrustPoints[4];
+
+        for (int i = 0; i < 4; i++) {
+            Vector2 rotated = Vector2Rotate(ship->thrustLines[i], ship->angle);
+            thrustPoints[i] = (Vector2){ rotated.x + ship->pos.x, rotated.y + ship->pos.y };
+        }
+
+        DrawLineStrip(thrustPoints, 4, WHITE);
+    }
 }
