@@ -17,5 +17,6 @@ typedef struct _asteroid {
 } Asteroid;
 
 Asteroid createAsteroid(Position pos, Velocity vel);
+void moveAsteroid(Asteroid *asteroid, Position pos);
 void updateAsteroid(Asteroid *asteroid);
 void drawAsteroid(Asteroid *asteroid);

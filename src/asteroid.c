@@ -1,6 +1,8 @@
 
 #include "asteroid.h"
 
+#define ASTEROID_LINES 11
+
 Asteroid createAsteroid(Position pos, Velocity vel)
 {
     int i;
@@ -13,7 +15,7 @@ Asteroid createAsteroid(Position pos, Velocity vel)
         .shape = shape
     };
     
-    Vector2 lines[3][11] = {
+    Vector2 lines[3][ASTEROID_LINES] = {
         { // SHAPE_ONE
             {   0, -55 }, {  24, -49 }, {  47, -29 }, {  39,  -6 },
             {  55,  19 }, {  30,  46 }, {   2,  51 }, { -25,  40 },
@@ -31,11 +33,16 @@ Asteroid createAsteroid(Position pos, Velocity vel)
         }
     };
 
-    for (i = 0; i < 11; i++) {
+    for (i = 0; i < ASTEROID_LINES; i++) {
         asteroid.lines[i] = lines[shape][i];
     }
 
     return asteroid;
+}
+
+void moveAsteroid(Asteroid *asteroid, Position pos)
+{
+    asteroid->pos = pos;
 }
 
 void updateAsteroid(Asteroid *asteroid)
@@ -45,5 +52,15 @@ void updateAsteroid(Asteroid *asteroid)
 
 void drawAsteroid(Asteroid *asteroid)
 {
-    return;
+    int i;
+    Vector2 posLines[ASTEROID_LINES];
+
+    for (i = 0; i < ASTEROID_LINES; i++) {
+        posLines[i] = (Vector2){
+            asteroid->lines[i].x + asteroid->pos.x,
+            asteroid->lines[i].y + asteroid->pos.y
+        };
+    }
+
+    DrawLineStrip(posLines, ASTEROID_LINES, WHITE);
 }
