@@ -1,6 +1,7 @@
 #pragma once
 
 #include "raylib.h"
+#include "raymath.h"
 #include "utils.h"
 
 enum AsteroidShape {
@@ -24,7 +25,7 @@ typedef struct _asteroid {
     Vector2 lines[11];
 } Asteroid;
 
-Asteroid createAsteroid(Position pos, Velocity vel, enum AsteroidSize size);
+Asteroid createAsteroid(Position pos);
 void moveAsteroid(Asteroid *asteroid, Position pos);
 void updateAsteroid(Asteroid *asteroid);
 void drawAsteroid(Asteroid *asteroid);

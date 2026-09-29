@@ -3,30 +3,36 @@
 
 #define ASTEROID_LINES 11
 
-Asteroid createAsteroid(Position pos, Velocity vel, enum AsteroidSize size)
+Asteroid createAsteroid(Position pos)
 {
     int i;
+    enum AsteroidSize size = LARGE;
     enum AsteroidShape shape =
         (enum AsteroidShape)GetRandomValue(SHAPE_ONE, SHAPE_THREE);
+    float angle, speed;
+    Vector2 rotated;
 
-    Asteroid asteroid = {
-        .pos = pos,
-        .vel = vel,
-        .shape = shape,
-        .size = size
-    };
+    angle = GetRandomValue(0, 359) * DEG2RAD;
+    rotated = Vector2Rotate((Vector2){ 0, -1.0f }, angle);
 
     switch (size) {
         case SMALL:
-            asteroid.speed = 40.0f;
+            speed = 2.5f;
             break;
         case MEDIUM:
-            asteroid.speed = 30.0f;
+            speed = 2.0f;
             break;
         case LARGE:
-            asteroid.speed = 20.0f;
+            speed = 1.5f;
             break;
     }
+
+    Asteroid asteroid = {
+        .pos = pos,
+        .vel = (Velocity){ rotated.x * speed, rotated.y * speed },
+        .shape = shape,
+        .size = size
+    };
     
     Vector2 lines[3][ASTEROID_LINES] = {
         { // SHAPE_ONE

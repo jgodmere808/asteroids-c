@@ -1,7 +1,6 @@
 
 #include "game.h"
 #include "asteroid.h"
-#include <stdio.h>
 
 #define GAME_WIDTH  1000
 #define GAME_HEIGHT 800
@@ -21,25 +20,13 @@ static Game game;
 static void reloadAsteroids(int count)
 {
     int i;
-    float angle;
-    Vector2 rotated;
 
     for (i = 0; i < count; i++) {
-        angle = GetRandomValue(0, 359) * DEG2RAD;
-        rotated = Vector2Rotate((Vector2){ 0, -1.0f }, angle);
-
-        printf("%.2f, %.2f, %.2f\n", angle, rotated.x, rotated.y);
-
         game.asteroids[i] = createAsteroid(
             (Position){
                 game.width / 2,
                 game.height / 2
-            },
-            (Velocity){
-                rotated.x,
-                rotated.y
-            },
-            LARGE
+            }
         );
     }
 
