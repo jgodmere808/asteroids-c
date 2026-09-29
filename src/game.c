@@ -90,15 +90,17 @@ static void updateBullets()
 static void reloadAsteroids(int count)
 {
     int i;
+    Position pos;
 
     for (i = 0; i < count; i++) {
-        game.asteroids[i] = createAsteroid(
-            (Position){
-                game.width / 2,
-                game.height / 2
-            },
-            LARGE
-        );
+        switch (GetRandomValue(0, 3)) {
+            case 0: pos = (Position) { GetRandomValue(0, game.width), 0 }; break;
+            case 1: pos = (Position) { game.width, GetRandomValue(0, game.height) }; break;
+            case 2: pos = (Position) { GetRandomValue(0, game.width), game.height }; break;
+            case 3: pos = (Position) { 0, GetRandomValue(0, game.height) }; break;
+        }
+
+        game.asteroids[i] = createAsteroid(pos, LARGE);
     }
 
     game.asteroidCount = count;
