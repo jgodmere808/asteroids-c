@@ -79,7 +79,18 @@ void updateAsteroid(Asteroid *asteroid, int gameWidth, int gameHeight)
     nextY = asteroid->pos.y + asteroid->vel.dy;
 
     // detect if asteroid is off screen
-    // if (nextX > )
+    if (nextX < -asteroid->radius) {
+        nextX = gameWidth + asteroid->radius;
+    }
+    if (nextX > gameWidth + asteroid->radius) {
+        nextX = -asteroid->radius;
+    }
+    if (nextY < -asteroid->radius) {
+        nextY = gameHeight + asteroid->radius;
+    }
+    if (nextY > gameHeight + asteroid->radius) {
+        nextY = -asteroid->radius;
+    }
 
     asteroid->pos.x = nextX;
     asteroid->pos.y = nextY;
