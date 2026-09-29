@@ -2,6 +2,7 @@
 #include "raylib.h"
 
 #include "game.h"
+#include "menu.h"
 
 int main()
 {
@@ -11,15 +12,20 @@ int main()
     SetConfigFlags(FLAG_MSAA_4X_HINT);
     InitWindow(screenWidth, screenHeight, "Asteroids!");
 
-    initGame();
+    initMenu(screenWidth, screenHeight);
 
     SetTargetFPS(60);
 
     while (!WindowShouldClose()) {
         BeginDrawing();
             ClearBackground(BLACK);
-            updateGame();
-            drawGame();
+
+            // updateGame();
+            // drawGame();
+
+            updateMenu();
+            drawMenu();
+
         EndDrawing();
     }
 
