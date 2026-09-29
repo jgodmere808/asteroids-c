@@ -8,6 +8,7 @@ Ship initShip()
     return (Ship){
         .pos = { 0, 0 },
         .vel = { 0, 0 },
+        .angle = 0,
         .lines = {
             {   0, -30 },  // nose
             {  20,  25 },  // right rear

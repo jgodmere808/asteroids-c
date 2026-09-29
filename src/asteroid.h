@@ -16,6 +16,7 @@ enum AsteroidSize {
 };
 
 typedef struct _asteroid {
+    float speed;
     Position pos;
     Velocity vel;
     enum AsteroidShape shape;

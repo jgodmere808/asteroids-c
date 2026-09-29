@@ -15,6 +15,18 @@ Asteroid createAsteroid(Position pos, Velocity vel, enum AsteroidSize size)
         .shape = shape,
         .size = size
     };
+
+    switch (size) {
+        case SMALL:
+            asteroid.speed = 40.0f;
+            break;
+        case MEDIUM:
+            asteroid.speed = 30.0f;
+            break;
+        case LARGE:
+            asteroid.speed = 20.0f;
+            break;
+    }
     
     Vector2 lines[3][ASTEROID_LINES] = {
         { // SHAPE_ONE
@@ -48,7 +60,13 @@ void moveAsteroid(Asteroid *asteroid, Position pos)
 
 void updateAsteroid(Asteroid *asteroid)
 {
-    return;
+    float nextX, nextY;
+
+    nextX = asteroid->pos.x + asteroid->vel.dx;
+    nextY = asteroid->pos.y + asteroid->vel.dy;
+
+    asteroid->pos.x = nextX;
+    asteroid->pos.y = nextY;
 }
 
 void drawAsteroid(Asteroid *asteroid)
