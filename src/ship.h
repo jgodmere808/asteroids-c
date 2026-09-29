@@ -14,5 +14,5 @@ typedef struct _ship {
 
 Ship initShip();
 void moveShip(Ship *ship, Position pos);
-void updateShip(Ship *ship);
+void updateShip(Ship *ship, int gameWidth, int gameHeight);
 void drawShip(Ship *ship);

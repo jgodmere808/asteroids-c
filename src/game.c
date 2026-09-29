@@ -43,13 +43,7 @@ void updateGame()
         updateAsteroid(&game.asteroids[i]);
     }
 
-    updateShip(&game.ship);
-
-    // if ship crosses outside map, respawn on other side
-    if (game.ship.pos.x < 0) game.ship.pos.x = game.width;
-    if (game.ship.pos.x > game.width) game.ship.pos.x = 0;
-    if (game.ship.pos.y < 0) game.ship.pos.y = game.height;
-    if (game.ship.pos.y > game.height) game.ship.pos.y = 0;
+    updateShip(&game.ship, game.width, game.height);
 }
 
 void drawGame()

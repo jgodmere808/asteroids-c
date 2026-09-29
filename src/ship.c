@@ -40,7 +40,7 @@ static void addShipVelocity(Ship *ship, Velocity vel)
     ship->vel.dy += vel.dy;
 }
 
-void updateShip(Ship *ship)
+void updateShip(Ship *ship, int gameWidth, int gameHeight)
 {
     float nextX, nextY;
 
@@ -65,6 +65,12 @@ void updateShip(Ship *ship)
         ship->vel.dx *= 0.99f;
         ship->vel.dy *= 0.99f;
     }
+
+    // if ship crosses outside map, respawn on other side
+    if (ship->pos.x < 0) ship->pos.x = gameWidth;
+    if (ship->pos.x > gameWidth) ship->pos.x = 0;
+    if (ship->pos.y < 0) ship->pos.y = gameHeight;
+    if (ship->pos.y > gameHeight) ship->pos.y = 0;
 
     nextX = ship->pos.x + ship->vel.dx;
     nextY = ship->pos.y + ship->vel.dy;
