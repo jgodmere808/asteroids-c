@@ -9,20 +9,25 @@ Asteroid createAsteroid(Position pos)
     enum AsteroidSize size = LARGE;
     enum AsteroidShape shape =
         (enum AsteroidShape)GetRandomValue(SHAPE_ONE, SHAPE_THREE);
-    float angle, speed;
+    float angle, speed, radius, factor;
     Vector2 rotated;
 
     angle = GetRandomValue(0, 359) * DEG2RAD;
     rotated = Vector2Rotate((Vector2){ 0, -1.0f }, angle);
 
+    radius = 50;
+
     switch (size) {
         case SMALL:
+            factor = 0.2f;
             speed = 2.5f;
             break;
         case MEDIUM:
+            factor = 0.6f;
             speed = 2.0f;
             break;
         case LARGE:
+            factor = 1.0f;
             speed = 1.5f;
             break;
     }
@@ -30,6 +35,8 @@ Asteroid createAsteroid(Position pos)
     Asteroid asteroid = {
         .pos = pos,
         .vel = (Velocity){ rotated.x * speed, rotated.y * speed },
+        .factor = factor,
+        .radius = radius * factor,
         .shape = shape,
         .size = size
     };
@@ -64,12 +71,15 @@ void moveAsteroid(Asteroid *asteroid, Position pos)
     asteroid->pos = pos;
 }
 
-void updateAsteroid(Asteroid *asteroid)
+void updateAsteroid(Asteroid *asteroid, int gameWidth, int gameHeight)
 {
     float nextX, nextY;
 
     nextX = asteroid->pos.x + asteroid->vel.dx;
     nextY = asteroid->pos.y + asteroid->vel.dy;
+
+    // detect if asteroid is off screen
+    // if (nextX > )
 
     asteroid->pos.x = nextX;
     asteroid->pos.y = nextY;
@@ -81,22 +91,10 @@ void drawAsteroid(Asteroid *asteroid)
     float factor = 0;
     Vector2 posLines[ASTEROID_LINES];
 
-    switch (asteroid->size) {
-        case SMALL:
-            factor = 0.2f;
-            break;
-        case MEDIUM:
-            factor = 0.6f;
-            break;
-        case LARGE:
-            factor = 1.0f;
-            break;
-    }
-
     for (i = 0; i < ASTEROID_LINES; i++) {
         posLines[i] = (Vector2){
-            factor * asteroid->lines[i].x + asteroid->pos.x,
-            factor * asteroid->lines[i].y + asteroid->pos.y
+            asteroid->factor * asteroid->lines[i].x + asteroid->pos.x,
+            asteroid->factor * asteroid->lines[i].y + asteroid->pos.y
         };
     }
 

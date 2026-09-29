@@ -53,7 +53,7 @@ void updateGame()
     int i;
 
     for (i = 0; i < game.asteroidCount; i++) {
-        updateAsteroid(&game.asteroids[i]);
+        updateAsteroid(&game.asteroids[i], game.width, game.height);
     }
 
     updateShip(&game.ship, game.width, game.height);

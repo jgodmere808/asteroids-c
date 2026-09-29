@@ -18,6 +18,8 @@ enum AsteroidSize {
 
 typedef struct _asteroid {
     float speed;
+    float radius;
+    float factor;
     Position pos;
     Velocity vel;
     enum AsteroidShape shape;
@@ -27,5 +29,5 @@ typedef struct _asteroid {
 
 Asteroid createAsteroid(Position pos);
 void moveAsteroid(Asteroid *asteroid, Position pos);
-void updateAsteroid(Asteroid *asteroid);
+void updateAsteroid(Asteroid *asteroid, int gameWidth, int gameHeight);
 void drawAsteroid(Asteroid *asteroid);
