@@ -27,7 +27,7 @@ typedef struct _asteroid {
     Vector2 lines[11];
 } Asteroid;
 
-Asteroid createAsteroid(Position pos);
+Asteroid createAsteroid(Position pos, enum AsteroidSize size);
 void moveAsteroid(Asteroid *asteroid, Position pos);
 void updateAsteroid(Asteroid *asteroid, int gameWidth, int gameHeight);
 void drawAsteroid(Asteroid *asteroid);

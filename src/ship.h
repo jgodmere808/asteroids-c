@@ -6,6 +6,7 @@
 
 typedef struct _ship {
     float angle;
+    float radius;
     Position pos;
     Velocity vel;
     Vector2 lines[5];

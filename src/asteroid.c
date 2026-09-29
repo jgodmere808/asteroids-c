@@ -3,10 +3,9 @@
 
 #define ASTEROID_LINES 11
 
-Asteroid createAsteroid(Position pos)
+Asteroid createAsteroid(Position pos, enum AsteroidSize size)
 {
     int i;
-    enum AsteroidSize size = LARGE;
     enum AsteroidShape shape =
         (enum AsteroidShape)GetRandomValue(SHAPE_ONE, SHAPE_THREE);
     float angle, speed, radius, factor;
@@ -38,6 +37,7 @@ Asteroid createAsteroid(Position pos)
         .factor = factor,
         .radius = radius * factor,
         .shape = shape,
+        .speed = speed,
         .size = size
     };
     

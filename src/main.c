@@ -17,11 +17,9 @@ int main()
 
     while (!WindowShouldClose()) {
         BeginDrawing();
-
+            ClearBackground(BLACK);
             updateGame();
             drawGame();
-
-            ClearBackground(BLACK);
         EndDrawing();
     }
 
