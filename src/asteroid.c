@@ -3,7 +3,7 @@
 
 #define ASTEROID_LINES 11
 
-Asteroid createAsteroid(Position pos, Velocity vel)
+Asteroid createAsteroid(Position pos, Velocity vel, enum AsteroidSize size)
 {
     int i;
     enum AsteroidShape shape =
@@ -12,7 +12,8 @@ Asteroid createAsteroid(Position pos, Velocity vel)
     Asteroid asteroid = {
         .pos = pos,
         .vel = vel,
-        .shape = shape
+        .shape = shape,
+        .size = size
     };
     
     Vector2 lines[3][ASTEROID_LINES] = {
@@ -53,12 +54,25 @@ void updateAsteroid(Asteroid *asteroid)
 void drawAsteroid(Asteroid *asteroid)
 {
     int i;
+    float factor = 0;
     Vector2 posLines[ASTEROID_LINES];
+
+    switch (asteroid->size) {
+        case SMALL:
+            factor = 0.2f;
+            break;
+        case MEDIUM:
+            factor = 0.6f;
+            break;
+        case LARGE:
+            factor = 1.0f;
+            break;
+    }
 
     for (i = 0; i < ASTEROID_LINES; i++) {
         posLines[i] = (Vector2){
-            asteroid->lines[i].x + asteroid->pos.x,
-            asteroid->lines[i].y + asteroid->pos.y
+            factor * asteroid->lines[i].x + asteroid->pos.x,
+            factor * asteroid->lines[i].y + asteroid->pos.y
         };
     }
 

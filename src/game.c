@@ -28,7 +28,8 @@ void initGame()
 
     game.asteroids[0] = createAsteroid(
         (Position){ game.width / 2, game.height / 2 },
-        (Velocity){ 0, 0 }
+        (Velocity){ 0, 0 },
+        LARGE
     );
 
     // move ship to center screen
