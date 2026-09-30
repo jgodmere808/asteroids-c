@@ -11,6 +11,7 @@ typedef struct _ship {
     Velocity vel;
     Vector2 lines[5];
     Vector2 thrustLines[4];
+    int disableThrusters;
 } Ship;
 
 Ship initShip();

@@ -3,13 +3,14 @@
 
 static int thrusting = 0;
 
-Ship initShip()
+Ship initShip(int disableThrusters)
 {
     return (Ship){
         .pos = { 0, 0 },
         .vel = { 0, 0 },
         .angle = 0,
         .radius = 25,
+        .disableThrusters = disableThrusters,
         .lines = {
             {   0, -30 },  // nose
             {  20,  25 },  // right rear
@@ -93,7 +94,7 @@ void drawShip(Ship *ship)
     DrawLineStrip(shipPoints, 5, WHITE);
 
     // Thrust
-    if (thrusting) {
+    if (thrusting && !ship->disableThrusters) {
         Vector2 thrustPoints[4];
 
         for (int i = 0; i < 4; i++) {

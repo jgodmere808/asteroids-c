@@ -25,9 +25,11 @@ typedef struct {
 
 typedef struct _game {
     int lives;
+    int score;
     enum GameState state;
     float shipInvincibleTime;
     Ship ship;
+    Ship shipLives[3];
     Asteroid asteroids[MAX_ASTEROIDS];
     int asteroidCount;
     Bullet bullets[MAX_BULLETS];
@@ -40,7 +42,7 @@ static Game game;
 
 static void respawnShip()
 {
-    game.ship = initShip();
+    game.ship = initShip(0);
     game.shipInvincibleTime = RESPAWN_INVINCIBILITY;
 
     moveShip(&game.ship, (Position){ GAME_WIDTH / 2, GAME_HEIGHT / 2 });
@@ -133,6 +135,19 @@ static void checkBulletAsteroidCollisions()
                 continue;
             }
 
+            // add to score
+            switch (asteroid->size) {
+                case SMALL:
+                    game.score += 100;
+                    break;
+                case MEDIUM:
+                    game.score += 50;
+                    break;
+                case LARGE:
+                    game.score += 20;
+                    break;
+            }
+
             // Save the parent before removing it from the array;
             parent = *asteroid;
 
@@ -207,14 +222,22 @@ static void checkShipAsteroidCollision()
 
 void initGame()
 {
+    int i;
+
     game = (Game){
         .lives = 3,
+        .score = 0,
         .state = PLAYING,
-        .ship = initShip(),
+        .ship = initShip(0),
         .asteroidCount = 1,
         .width = GAME_WIDTH,
         .height = GAME_HEIGHT
     };
+
+    for (i = 0; i < 3; i++) {
+        game.shipLives[i] = initShip(1);
+        moveShip(&game.shipLives[i], (Position){ 50 * i + 30, 90 });
+    }
 
     // move ship to center screen
     moveShip(&game.ship, (Position){ GAME_WIDTH / 2, GAME_HEIGHT / 2 });
@@ -276,4 +299,12 @@ void drawGame()
     if (game.state == GAME_OVER) {
         DrawText("GAME OVER", (game.width - 380) / 2, (game.height - 100) / 2, 64, WHITE);
     }
+
+    // Ship lives display
+    for (i = 0; i < game.lives; i++) {
+        drawShip(&game.shipLives[i]);
+    }
+
+    // Score board
+    DrawText(TextFormat("SCORE: %i", game.score), 10, 10, 32, WHITE);
 }
