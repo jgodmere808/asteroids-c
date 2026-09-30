@@ -13,6 +13,7 @@ int main()
     InitWindow(screenWidth, screenHeight, "Asteroids!");
 
     initMenu(screenWidth, screenHeight);
+    initGame(screenWidth, screenHeight);
 
     SetTargetFPS(60);
 
@@ -20,11 +21,13 @@ int main()
         BeginDrawing();
             ClearBackground(BLACK);
 
-            // updateGame();
-            // drawGame();
-
-            updateMenu();
-            drawMenu();
+            if (menuState == NEW_GAME) {
+                updateGame();
+                drawGame();
+            } else {
+                updateMenu();
+                drawMenu();
+            }
 
         EndDrawing();
     }

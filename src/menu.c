@@ -3,9 +3,16 @@
 
 #define MENU_MAX_ASTEROIDS 10
 
+typedef struct _button {
+    Position pos;
+    int width;
+    int height;
+} Button;
+
 typedef struct _menu {
     Asteroid asteroids[MENU_MAX_ASTEROIDS];
     int asteroidCount;
+    Button newGameBtn;
     int screenWidth;
     int screenHeight;
 } Menu;
@@ -36,8 +43,15 @@ void initMenu(int screenWidth, int screenHeight)
 {
     menu = (Menu) {
         .screenWidth = screenWidth,
-        .screenHeight = screenHeight
+        .screenHeight = screenHeight,
+        .newGameBtn = (Button) {
+            .pos = (Position){ 400, 400 },
+            .width = 180,
+            .height = 30
+        }
     };
+
+    menuState = IN_MENU;
 
     reloadAsteroids(MENU_MAX_ASTEROIDS);
 }
@@ -45,9 +59,27 @@ void initMenu(int screenWidth, int screenHeight)
 void updateMenu()
 {
     int i;
+    Vector2 mouse = GetMousePosition();
 
     for (i = 0; i < menu.asteroidCount; i++) {
         updateAsteroid(&menu.asteroids[i], menu.screenWidth, menu.screenHeight);
+    }
+
+    // if hovering above button
+    if (
+        mouse.x >= menu.newGameBtn.pos.x &&
+        mouse.x <= menu.newGameBtn.pos.x + menu.newGameBtn.width &&
+        mouse.y >= menu.newGameBtn.pos.y &&
+        mouse.y <= menu.newGameBtn.pos.y + menu.newGameBtn.height
+    ) {
+        // is hovering
+        SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+            menuState = NEW_GAME;
+        }
+    } else {
+        SetMouseCursor(MOUSE_CURSOR_DEFAULT);
     }
 }
 
